@@ -1,2 +1,44 @@
 package edu.pe.cibertec.gestortareas.viewmodel
 
+import androidx.compose.runtime.*
+import androidx.lifecycle.ViewModel
+import edu.pe.cibertec.gestortareas.model.Prioridad
+import edu.pe.cibertec.gestortareas.model.EstadoDialogo
+import edu.pe.cibertec.gestortareas.model.Tarea
+import edu.pe.cibertec.gestortareas.model.Notificacion
+import edu.pe.cibertec.gestortareas.model.TipoNotificacion
+import java.util.*
+
+class TareasViewModel : ViewModel(){
+
+    var tareas by mutableStateOf(obtenerTareasIniciales())
+        private set
+
+    var estaDialogo by mutableStateOf(EstadoDialogo())
+        private set
+
+    var notificacion by mutableStateOf<Notificacion?>(null)
+        private set
+
+    var tituloNuevaTarea by mutableStateOf("")
+        private set
+    var descripcionNuevaTarea by mutableStateOf("")
+        private set
+    var priroridadNuevaTarea by mutableStateOf(Prioridad.MEDIA)
+        private set
+
+
+
+    private fun limpiarFormulario(){
+        tituloNuevaTarea = ""
+        descripcionNuevaTarea = ""
+        priroridadNuevaTarea = Prioridad.MEDIA
+    }
+    private fun obtenerTareasIniciales(): List<Tarea>{
+        return listOf(
+            Tarea(1, "Tarea 1", "Descripción de la tarea 1", Date(), false, Prioridad.BAJA),
+            Tarea(2, "Tarea 2", "Descripción de la tarea 2", Date(), false, Prioridad.MEDIA),
+            Tarea(3, "Tarea 3", "Descripción de la tarea 3", Date(), false, Prioridad.ALTA)
+        )
+    }
+}
