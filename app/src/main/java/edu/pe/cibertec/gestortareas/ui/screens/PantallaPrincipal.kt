@@ -101,7 +101,7 @@ fun ContenidoPrincial(viewModel: TareasViewModel) {
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Text(
                     text = "No hay tareas",
@@ -122,7 +122,7 @@ fun ContenidoPrincial(viewModel: TareasViewModel) {
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(80.dp),
+                contentPadding = PaddingValues(4.dp),
             ) {
                 items(items = viewModel.tareas, key = { it.id }) { tarea ->
                     TarjetaTarea(

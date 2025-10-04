@@ -23,7 +23,7 @@ fun TarjetaTarea(
     Card (
         modifier =  Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 10.dp, vertical = 6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (tarea.completada)
@@ -34,14 +34,14 @@ fun TarjetaTarea(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Checkbox(
                 checked = tarea.completada,
                 onCheckedChange = { onCompletadaChange(tarea) }
             )
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(8.dp))
             Column(
                 modifier = Modifier.weight(1f)
             ) {
@@ -89,7 +89,7 @@ fun TarjetaTarea(
                 }
 
             }
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(4.dp))
             IconButton(
                 onClick = { onEliminar(tarea) }
             ) {
