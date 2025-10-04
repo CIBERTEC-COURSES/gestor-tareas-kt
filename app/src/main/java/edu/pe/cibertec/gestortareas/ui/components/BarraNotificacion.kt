@@ -23,7 +23,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun BarraNotificacion(
-    notificacion: Notificacion,
+    notificacion: Notificacion?,
     onDismiss: () -> Unit
 ) {
     val snackbarHostState = remember { SnackbarHostState() }

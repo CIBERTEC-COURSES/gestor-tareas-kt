@@ -27,9 +27,13 @@ class TareasViewModel : ViewModel(){
     fun actualizarTitulo(nuevoTitulo: String){
         tituloNuevaTarea = nuevoTitulo
     }
+    fun actualizarDescripcionTarea(nuevaDescripcion: String){
+        descripcionNuevaTarea = nuevaDescripcion
+    }
     fun actualizarPrioridad(nuevaPrioridad: Prioridad){
       priroridadNuevaTarea = nuevaPrioridad
     }
+
     fun mostrarDialogoNuevaTarea(){
         estadoDialogo = estadoDialogo.copy(mostrarDialogoNuevaTarea = true)
         limpiarFormulario()
@@ -38,6 +42,13 @@ class TareasViewModel : ViewModel(){
     fun ocultarDialogoNuevaTarea(){
         estadoDialogo = estadoDialogo.copy(mostrarDialogoNuevaTarea = false)
         limpiarFormulario()
+    }
+    // Confirmaciones
+    fun mostrarDaalogoConfirmacion(tarea: Tarea){
+        estadoDialogo = estadoDialogo.copy(mostrarConfirmacion = true, tareaAEliminar = tarea)
+    }
+    fun ocultarDialogoConfirmacion(){
+        estadoDialogo = estadoDialogo.copy(mostrarConfirmacion = false, tareaAEliminar = null)
     }
 
     // Manejo de acciones crud
@@ -55,6 +66,22 @@ class TareasViewModel : ViewModel(){
         tareas = tareas + nuevaTarea
         ocultarDialogoNuevaTarea()
         mostrarNotificacion("Tarea agregada con éxito", TipoNotificacion.EXITO)
+    }
+    fun eliminarTarea(){
+        estadoDialogo.tareaAEliminar?.let { tarea ->
+            tareas = tareas.filter { it.id != tarea.id }
+            estadoDialogo = estadoDialogo.copy(mostrarConfirmacion = false)
+            mostrarNotificacion("Tarea eliminada con éxito", TipoNotificacion.EXITO)
+        }
+    }
+    fun alternarCompletadaTarea(tarea: Tarea){
+        tareas = tareas.map {
+            if(it.id == tarea.id){
+                it.copy(completada = !it.completada)
+            }else{
+                it
+            }
+        }
     }
 
     // Notificaciones
