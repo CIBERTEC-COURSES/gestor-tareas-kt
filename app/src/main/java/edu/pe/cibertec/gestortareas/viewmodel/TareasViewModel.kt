@@ -10,16 +10,12 @@ import edu.pe.cibertec.gestortareas.model.TipoNotificacion
 import java.util.*
 
 class TareasViewModel : ViewModel(){
-
     var tareas by mutableStateOf(obtenerTareasIniciales())
         private set
-
-    var estaDialogo by mutableStateOf(EstadoDialogo())
+    var estadoDialogo by mutableStateOf(EstadoDialogo())
         private set
-
     var notificacion by mutableStateOf<Notificacion?>(null)
         private set
-
     var tituloNuevaTarea by mutableStateOf("")
         private set
     var descripcionNuevaTarea by mutableStateOf("")
@@ -27,7 +23,48 @@ class TareasViewModel : ViewModel(){
     var priroridadNuevaTarea by mutableStateOf(Prioridad.MEDIA)
         private set
 
+    // Functiones para manejar estado de datos
+    fun actualizarTitulo(nuevoTitulo: String){
+        tituloNuevaTarea = nuevoTitulo
+    }
+    fun actualizarPrioridad(nuevaPrioridad: Prioridad){
+      priroridadNuevaTarea = nuevaPrioridad
+    }
+    fun mostrarDialogoNuevaTarea(){
+        estadoDialogo = estadoDialogo.copy(mostrarDialogoNuevaTarea = true)
+        limpiarFormulario()
+    }
 
+    fun ocultarDialogoNuevaTarea(){
+        estadoDialogo = estadoDialogo.copy(mostrarDialogoNuevaTarea = false)
+        limpiarFormulario()
+    }
+
+    // Manejo de acciones crud
+    fun agregarTarea(){
+        if(tituloNuevaTarea.isBlank()){
+            mostrarNotificacion("El título es obligatorio", TipoNotificacion.ERROR)
+            return
+        }
+        val nuevaTarea = Tarea(
+            id = tareas.size + 1,
+            tituloNuevaTarea.trim(),
+            descripcionNuevaTarea.trim(),
+            prioridad = priroridadNuevaTarea
+        )
+        tareas = tareas + nuevaTarea
+        ocultarDialogoNuevaTarea()
+        mostrarNotificacion("Tarea agregada con éxito", TipoNotificacion.EXITO)
+    }
+
+    // Notificaciones
+    fun mostrarNotificacion(mensaje: String, tipoNotificacion: TipoNotificacion){
+        notificacion = Notificacion(mensaje, tipoNotificacion, true)
+    }
+
+    fun ocultarNotificacion(){
+        notificacion = notificacion?.copy(visible = false)
+    }
 
     private fun limpiarFormulario(){
         tituloNuevaTarea = ""
